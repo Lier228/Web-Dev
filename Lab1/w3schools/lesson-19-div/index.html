@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Div containers</title>
+    <style>
+        div.ex1 {
+            width: 300px;
+            margin: auto;
+        }
+
+        div.mycontainer {
+            width: 100%;
+            overflow: auto;
+        }
+
+        div.mycontainer div {
+            width: 33%;
+            float: left;
+        }
+
+        div.inline {
+            width: 30%;
+            display: inline-block;
+        }
+
+        div.flex {
+            display: flex;
+        }
+
+        .flex>div {
+            width: 33%;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 33% 33% 33%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ex1" style="background-color:#FFF4A3;">
+        <h2>London</h2>
+        <p>London is the capital city of England.</p>
+        <p>London has over 9 million inhabitants.</p>
+    </div>
+
+    <!--Multi-div-->
+    <div class="ex1">
+        <h2>London</h2>
+        <p>London is the capital city of England.</p>
+        <p>London has over 9 million inhabitants.</p>
+    </div>
+
+    <div class="ex1">
+        <h2>Oslo</h2>
+        <p>Oslo is the capital city of Norway.</p>
+        <p>Oslo has over 700,000 inhabitants.</p>
+    </div>
+
+    <div class="ex1">
+        <h2>Rome</h2>
+        <p>Rome is the capital city of Italy.</p>
+        <p>Rome has over 4 million inhabitants.</p>
+    </div>
+
+    <!--Another one example-->
+    <div class="mycontainer">
+        <h2>London</h2>
+        <p>London is the capital city of England.</p>
+        <p>London has over 9 million inhabitants.</p>
+    </div>
+    <div class="mycontainer">
+        <h2>Oslo</h2>
+        <p>Oslo is the capital city of Norway.</p>
+        <p>Oslo has over 700,000 inhabitants.</p>
+    </div>
+    <div class="mycontainer">
+        <h2>Rome</h2>
+        <p>Rome is the capital city of Italy.</p>
+        <p>Rome has over 4 million inhabitants.</p>
+    </div>
+
+    <!--Inline blocks-->
+    <div class="inline">
+        <h2>London</h2>
+        <p>London is the capital city of England.</p>
+        <p>London has over 9 million inhabitants.</p>
+    </div>
+    <div class="inline">
+        <h2>Oslo</h2>
+        <p>Oslo is the capital city of Norway.</p>
+        <p>Oslo has over 700,000 inhabitants.</p>
+    </div>
+    <div class="inline">
+        <h2>Rome</h2>
+        <p>Rome is the capital city of Italy.</p>
+        <p>Rome has over 4 million inhabitants.</p>
+    </div>
+
+    <!--Flex-->
+    <div class="flex">
+        <h2>London</h2>
+        <p>London is the capital city of England.</p>
+        <p>London has over 9 million inhabitants.</p>
+    </div>
+    <div class="flex">
+        <h2>Oslo</h2>
+        <p>Oslo is the capital city of Norway.</p>
+        <p>Oslo has over 700,000 inhabitants.</p>
+    </div>
+    <div class="flex">
+        <h2>Rome</h2>
+        <p>Rome is the capital city of Italy.</p>
+        <p>Rome has over 4 million inhabitants.</p>
+    </div>
+
+    <!--Grid-example-->
+    <div class="grid-container">
+        <h2>London</h2>
+        <p>London is the capital city of England.</p>
+        <p>London has over 9 million inhabitants.</p>
+    </div>
+    <div class="grid-container">
+        <h2>Oslo</h2>
+        <p>Oslo is the capital city of Norway.</p>
+        <p>Oslo has over 700,000 inhabitants.</p>
+    </div>
+</body>
+
+</html>
