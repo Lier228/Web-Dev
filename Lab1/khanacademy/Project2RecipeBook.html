@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project: Recipe book</title>
+        <meta charset="utf-8">
+        <style>
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #f6f7f9;
+        color: #222;
+        margin: 40px;
+        line-height: 1.6;
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-top: 32px;
+        margin-bottom: 12px;
+    }
+
+    a {
+        color: #2563eb; 
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    #contents {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 32px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .recipe-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 28px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    ul, ol {
+        padding-left: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 14px;
+    }
+
+    th {
+        text-align: left;
+        font-weight: 600;
+        padding: 10px;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    img {
+        width: 100%;
+        max-width: 420px;
+        border-radius: 12px;
+        margin: 16px 0;
+        display: block;
+    }
+
+    p {
+        margin: 8px 0;
+    }
+
+    em {
+        color: #6b7280;
+        font-size: 14px;
+    }
+</style>
+
+    </head>
+
+    <body>
+        <h1>Chloe's Recipe Book</h1>
+
+        <h2>Contents:</h2>
+        <div id="contents">
+            <ol>
+                <li><a href="#recipe1">Recipe #1: Pancakes</a></li>
+                <li><a href="#recipe2">Recipe #2: Chicken Fried Rice</a></li>
+                <li><a href="#recipe3">Recipe #3: Greek Salad</a></li>
+            </ol>
+        </div>
+
+        <!-- RECIPE 1 -->
+        <div class="recipe-card">
+            <h2 id="recipe1">Recipe #1: Pancakes</h2>
+
+            <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/food/cake.png" alt="Pancakes">
+
+            <ul>
+                <li>Time: 15–20 minutes</li>
+                <li>Serves: 2–3</li>
+                <li>Difficulty: Easy</li>
+            </ul>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ingredients</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Flour</td>
+                        <td>1 cup</td>
+                    </tr>
+                    <tr>
+                        <td>Milk</td>
+                        <td>1 cup</td>
+                    </tr>
+                    <tr>
+                        <td>Egg</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Sugar</td>
+                        <td>1 tbsp</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Steps:</strong></p>
+            <ol>
+                <li>Mix flour + sugar in a bowl.</li>
+                <li>Add milk and egg, whisk until smooth.</li>
+                <li>Heat a pan, lightly oil it.</li>
+                <li>Pour batter, cook 1–2 minutes each side.</li>
+            </ol>
+
+            <p><em>Source: <a href="https://en.wikipedia.org/wiki/Pancake" target="_blank">Wikipedia (Pancake)</a></em></p>
+        </div>
+
+        <!-- RECIPE 2 -->
+        <div class="recipe-card">
+            <h2 id="recipe2">Recipe #2: Chicken Fried Rice</h2>
+
+            <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/food/sushi.png" alt="Fried rice">
+
+            <ul>
+                <li>Time: 25–30 minutes</li>
+                <li>Serves: 2</li>
+                <li>Tip: Best with cold rice (from fridge)</li>
+            </ul>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ingredients</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cooked rice</td>
+                        <td>2 cups</td>
+                    </tr>
+                    <tr>
+                        <td>Chicken (cut small)</td>
+                        <td>200 g</td>
+                    </tr>
+                    <tr>
+                        <td>Eggs</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Soy sauce</td>
+                        <td>1–2 tbsp</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Steps:</strong></p>
+            <p>1) Fry chicken in a hot pan until cooked.</p>
+            <p>2) Push chicken aside, scramble eggs in the same pan.</p>
+            <p>3) Add rice, mix well, then add soy sauce.</p>
+            <p>4) Cook 3–5 minutes, stirring so it doesn’t burn.</p>
+
+            <p><em>Source: <a href="https://en.wikipedia.org/wiki/Fried_rice" target="_blank">Wikipedia (Fried rice)</a></em></p>
+        </div>
+
+        <!-- RECIPE 3 -->
+        <div class="recipe-card">
+            <h2 id="recipe3">Recipe #3: Greek Salad</h2>
+
+            <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/food/broccoli.png" alt="Greek salad">
+
+            <ul>
+                <li>Time: 10 minutes</li>
+                <li>Serves: 2–3</li>
+                <li>Best for: Light dinner</li>
+            </ul>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ingredients</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tomatoes</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Cucumber</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Feta cheese</td>
+                        <td>100 g</td>
+                    </tr>
+                    <tr>
+                        <td>Olives</td>
+                        <td>Handful</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Steps:</strong></p>
+            <ul>
+                <li>Chop tomatoes and cucumber.</li>
+                <li>Add olives and feta on top.</li>
+                <li>Salt lightly, add olive oil (optional) and mix gently.</li>
+            </ul>
+
+            <p><em>Source: <a href="https://en.wikipedia.org/wiki/Greek_salad" target="_blank">Wikipedia (Greek salad)</a></em></p>
+        </div>
+    </body>
+</html>
