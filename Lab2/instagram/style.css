@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.content{
+    color: white;
+    display: flex;
+    flex-direction:row;
+    position: relative;
+    justify-content: space-between;
+    background: #0b0f14;
+}
+
+.main {
+    max-width: 100%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    margin-left: -64px;
+}
+
+.login {
+    width: 650px;
+    height: 690px;
+    background-color: #16262F;
+}
+
+.header {
+    margin-top: 40px;
+    padding-left: 40px;
+    position:static;
+    margin-bottom: -120px;
+    height: max-content;
+}
+
+.icon {
+    width: 96px;
+    height: 96px;
+    display: block;
+}
+
+.text {
+    margin-top: -12px;
+    margin-top: 0;
+    font-size: 2.8vw;
+    display: block;
+    font-weight: 400;
+    text-align: center;
+    word-wrap: break-word;
+    position: relative;
+    white-space: pre-line;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    width: 85%;
+    max-width: 800px;
+    height: max-content;
+}
+
+.container {
+    position: absolute;
+    width: 70vw;
+    padding-bottom: 40px;
+    height: calc(100vh - 70px);
+    max-width: 100%;
+    padding-top: 40px;
+    min-height: 590px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.img {
+    min-height: 290px;
+    height: calc(100vh - 370px);
+    min-width: 500px;
+    width: calc(100vw - 780px);
+    object-fit: contain;
+    border: 0;
+}
+
+.ig-footer {
+  background: #0b0f14;
+  padding: 40px 20px;
+  border-top: 1px solid #1f2933;
+  font-family: Arial, sans-serif;
+}
+
+.ig-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 1300px;
+  margin: 0 auto 25px;
+}
+
+.ig-footer-links a {
+  color: #9aa4af;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.ig-footer-links a:hover {
+  text-decoration: underline;
+}
+
+.ig-footer-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  color: #9aa4af;
+  font-size: 12px;
+}
+
+.ig-footer-bottom select {
+  background: transparent;
+  border: none;
+  color: #9aa4af;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+
+.login-panel{
+  max-width:550px;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.login-panel h1{
+  margin-top:120px;
+  color:#fff;
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:20px;
+}
+
+.login-panel input{
+  background:#0f1f28;
+  border:1px solid #32424f;
+  border-radius:32px;
+  height:58px;
+  padding:0 22px;
+  font-size:17px;
+  color:#dbe7ee;
+}
+
+.login-panel input::placeholder{
+  color:#9fb1bd;
+}
+
+.btn-login,
+.btn-facebook,
+.btn-create{
+  height:44px;
+  width:100%;
+  padding:0 24px;
+  border-radius:32px;
+  font-size:17px;
+}
+
+.btn-login{
+  background:#0b4ea2;
+  border:none;
+  color:#fff;
+  font-size:18px;
+  font-weight:500;
+}
+
+.btn-facebook{
+  background:transparent;
+  border:1px solid #32424f;
+  color:#fff;
+}
+
+.btn-create{
+  background:transparent;
+  border:1px solid #1a6ed8;
+  color:#4aa3ff;
+}
+
+.forgot{
+  text-align:center;
+  color:#fff;
+  text-decoration:none;
+  font-size:17px;
+}
+
+.meta{
+  text-align:center;
+  color:#aaa;
+}
+
+#forgot{
+  background-color:transparent !important;
+}
+
+#forgot:hover{
+  background-color:#0F1F28 !important;
+}

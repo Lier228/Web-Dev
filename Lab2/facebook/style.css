@@ -1,0 +1,281 @@
+.main{
+  background-color:aliceblue;
+  width:100%;
+  height:536px;
+  padding-top:72px;
+  padding-bottom:112px;
+  clear:both;
+}
+
+body{
+  margin:0;
+  direction:ltr;
+  font-family:Helvetica,Arial,sans-serif;
+  font-size:12px;
+  height:915px;
+}
+
+a{
+  margin:0;
+  padding:0;
+  text-decoration:none;
+  color:#0866ff;
+  font-size:14px;
+  font-weight:500;
+}
+
+a:hover{
+  text-decoration:underline;
+}
+
+.line{
+  align-items:center;
+  border-bottom:1px solid #DADDE1;
+  display:flex;
+  margin:20px 16px;
+  text-align:center;
+}
+
+.footer{
+  width:100%;
+  height:155px;
+}
+
+.main-container{
+  margin:0 auto;
+  padding:20px 0;
+  position:relative;
+  width:980px;
+  height:496px;
+  display:flex;
+  justify-content:space-between;
+}
+
+form{
+  margin:0;
+  padding:0;
+  text-align:center;
+}
+
+.button{
+  margin:auto;
+  padding:6px 0;
+}
+
+.second-container{
+  height:456px;
+  width:396px;
+}
+
+.block-container{
+  align-items:center;
+  background-color:#fff;
+  border:none;
+  border-radius:8px;
+  box-shadow:0 2px 4px #0000001a,0 8px 16px #0000001a;
+  box-sizing:border-box;
+  margin:40px 0 0;
+  padding:20px 0 28px;
+  width:396px;
+}
+
+.container{
+  display:inline-block;
+  margin-right:16px;
+  vertical-align:top;
+  width:565px;
+  height:456px;
+}
+
+.inputtext{
+  border-radius:6px;
+  font-size:17px;
+  padding:14px 16px;
+  width:330px;
+  border:1px solid #dddfe2;
+}
+
+.inputtext:focus-visible{
+  outline:none;
+}
+
+.inputtext:focus{
+  border-color:#0866ff;
+  box-shadow:0 0 0 2px #e7f3ff;
+  caret-color:#0866ff;
+}
+
+.btn{
+  text-align:center;
+  padding-top:6px;
+}
+
+.text{
+  box-sizing:content-box;
+  font-size:20px;
+  border-radius:6px;
+  border:none;
+  font-weight:700;
+  justify-content:center;
+  position:relative;
+  text-align:center;
+}
+
+button{
+  cursor:pointer;
+  background-color:#0866ff;
+  color:white;
+  border:none;
+  border-radius:6px;
+  font-size:20px;
+  line-height:48px;
+  padding:0 16px;
+  height:48px;
+}
+
+.med{
+  width:332px;
+}
+
+.med:hover{
+  background-color:#1877f2;
+}
+
+.small{
+  background-color:#42b72a;
+  border-color:#42b72a;
+  width:200px;
+  border:none;
+  border-radius:6px;
+  line-height:48px;
+  padding:0 16px;
+  font-size:16px;
+}
+
+.small:hover{
+  background-color:#36a420;
+  border-color:#36a420;
+}
+
+._4jy0{
+  transition:.2s cubic-bezier(.08,.52,.52,1) background-color,
+             .2s cubic-bezier(.08,.52,.52,1) box-shadow,
+             .2s cubic-bezier(.08,.52,.52,1) transform;
+}
+
+.regpage{
+  margin-top:28px;
+  text-align:center;
+  color:#1c1e21;
+  font-family:SFProText-Regular,Helvetica,Arial,sans-serif;
+  font-size:14px;
+  font-weight:400;
+}
+
+.regpage a{
+  color:black;
+  font-weight:bold;
+}
+
+h2{
+  margin:0;
+  padding:0 0 20px;
+}
+
+.facebook{
+  height:106px;
+  margin:-28px;
+}
+
+.img{
+  padding:112px 0 16px;
+}
+
+#text{
+  font-family:SFProDisplay-Regular,Helvetica,Arial,sans-serif;
+  font-size:28px;
+  font-weight:400;
+  line-height:32px;
+  width:500px;
+}
+
+div.top{
+  margin-top:16px;
+}
+
+.ullist{
+  align-items:center;
+  display:flex;
+  flex-wrap:wrap;
+  list-style:none;
+}
+
+.ullist li{
+  padding-left:10px;
+}
+
+.ullist li:first-child{
+  padding-left:0;
+}
+
+ul{
+  margin-block-start:1em;
+  margin-block-end:1em;
+  padding-inline-start:40px;
+  unicode-bidi:isolate;
+}
+
+.meta-footer{
+  background:#fff;
+  padding:20px 16px 30px;
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  color:#737373;
+}
+
+.meta-footer a{
+  color:#737373;
+  text-decoration:none;
+}
+
+.meta-footer a:hover{
+  text-decoration:underline;
+}
+
+.lang-row,
+.links-row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px 16px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.lang-row{
+  margin-bottom:10px;
+}
+
+.plus{
+  border:1px solid #ccd0d5;
+  border-radius:4px;
+  padding:0 6px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+hr{
+  border:none;
+  border-top:1px solid #ddd;
+  margin:12px auto;
+  max-width:1200px;
+}
+
+.links-row{
+  margin-bottom:16px;
+}
+
+.copyright{
+  text-align:center;
+  color:#737373;
+}
