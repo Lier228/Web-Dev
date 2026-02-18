@@ -7,6 +7,10 @@ body {
     background: #0b0f14;
 }
 
+input:focus {
+    border: 0.75em blue;
+}
+
 .content {
     color: white;
     display: flex;
