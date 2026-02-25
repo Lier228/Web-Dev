@@ -1,0 +1,32 @@
+<div class="app-wrapper">
+  <aside class="sidebar">
+    <h1 class="logo">Online Store</h1>
+    <p class="sidebar-subtitle">Выберите категорию:</p>
+
+    <div class="category-list">
+      <button
+        *ngFor="let c of categories"
+        type="button"
+        (click)="selectCategory(c.id)"
+        [class.active]="c.id === selectedCategoryId">
+        {{ c.name }}
+      </button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <ng-container *ngIf="selectedCategoryId; else welcome">
+      <app-product-list
+        [products]="selectedProducts"
+        [categoryName]="selectedCategoryName">
+      </app-product-list>
+    </ng-container>
+
+    <ng-template #welcome>
+      <div class="welcome">
+        <h2>Добро пожаловать в онлайн‑магазин</h2>
+        <p>Пожалуйста, выберите категорию слева, чтобы увидеть товары.</p>
+      </div>
+    </ng-template>
+  </main>
+</div>
