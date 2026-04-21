@@ -1,3 +1,5 @@
+from urllib.parse import parse_qs, urlparse
+
 from django.core.management.base import BaseCommand
 
 from exercises.models import Exercise, ExerciseMuscleGroup, MuscleGroup
@@ -17,45 +19,119 @@ MUSCLE_GROUPS = [
 EXERCISES = [
     {
         'name': 'Bench Press',
-        'description': 'Classic chest exercise with barbell.',
+        'description': 'Classic chest press with a barbell.',
         'exercise_type': 'compound',
         'base_coefficient': '1.00',
-        'image_url': 'https://example.com/bench.jpg',
+        'video_url': 'https://www.youtube.com/watch?v=gRVjAtPip0Y',
         'muscles': [('chest', '70.00', True), ('triceps', '30.00', False)],
     },
     {
-        'name': 'Back Squat',
-        'description': 'Lower-body compound lift.',
+        'name': 'Incline Dumbbell Press',
+        'description': 'Upper-chest pressing variation with dumbbells.',
         'exercise_type': 'compound',
-        'base_coefficient': '1.10',
-        'image_url': 'https://example.com/squat.jpg',
-        'muscles': [('quads', '60.00', True), ('glutes', '40.00', False)],
+        'base_coefficient': '1.02',
+        'video_url': 'https://www.youtube.com/watch?v=2iBZFwA9b6w',
+        'muscles': [('chest', '65.00', True), ('triceps', '25.00', False), ('back', '10.00', False)],
+    },
+    {
+        'name': 'Parallel Bar Dips',
+        'description': 'Bodyweight dip for chest and triceps.',
+        'exercise_type': 'bodyweight',
+        'base_coefficient': '0.98',
+        'video_url': 'https://www.youtube.com/watch?v=cJyRpNh2FjU',
+        'muscles': [('triceps', '60.00', True), ('chest', '40.00', False)],
     },
     {
         'name': 'Barbell Row',
-        'description': 'Pulling exercise for the upper back.',
+        'description': 'Upper-back row with a strong lat and biceps focus.',
         'exercise_type': 'compound',
         'base_coefficient': '1.00',
-        'image_url': 'https://example.com/row.jpg',
+        'video_url': 'https://www.youtube.com/watch?v=DgyslsszCQ0',
         'muscles': [('back', '75.00', True), ('biceps', '25.00', False)],
+    },
+    {
+        'name': 'Lat Pulldown',
+        'description': 'Vertical pull for lats and upper back.',
+        'exercise_type': 'machine',
+        'base_coefficient': '0.94',
+        'video_url': 'https://www.youtube.com/watch?v=71d6vnSZG3U',
+        'muscles': [('back', '70.00', True), ('biceps', '30.00', False)],
+    },
+    {
+        'name': 'Back Squat',
+        'description': 'Lower-body compound squat pattern.',
+        'exercise_type': 'compound',
+        'base_coefficient': '1.10',
+        'video_url': 'https://www.youtube.com/watch?v=61Plfzis9R0',
+        'muscles': [('quads', '60.00', True), ('glutes', '40.00', False)],
+    },
+    {
+        'name': 'Bulgarian Split Squat',
+        'description': 'Single-leg squat for quads and glutes.',
+        'exercise_type': 'compound',
+        'base_coefficient': '1.04',
+        'video_url': 'https://www.youtube.com/watch?v=GYivEspzykA',
+        'muscles': [('quads', '65.00', True), ('glutes', '35.00', False)],
+    },
+    {
+        'name': 'Barbell Curl',
+        'description': 'Basic standing curl for biceps strength.',
+        'exercise_type': 'isolation',
+        'base_coefficient': '0.86',
+        'video_url': 'https://www.youtube.com/watch?v=BmFEhhh8sqI',
+        'muscles': [('biceps', '100.00', True)],
+    },
+    {
+        'name': 'Hammer Curl',
+        'description': 'Neutral-grip curl for biceps and brachialis.',
+        'exercise_type': 'isolation',
+        'base_coefficient': '0.88',
+        'video_url': 'https://www.youtube.com/watch?v=Sf7v8U4h8Jg',
+        'muscles': [('biceps', '100.00', True)],
+    },
+    {
+        'name': 'Skull Crusher',
+        'description': 'Overhead triceps extension lying on a bench.',
+        'exercise_type': 'isolation',
+        'base_coefficient': '0.90',
+        'video_url': 'https://www.youtube.com/watch?v=NcsjVw206m0',
+        'muscles': [('triceps', '100.00', True)],
     },
     {
         'name': 'Plank',
         'description': 'Static core stability exercise.',
         'exercise_type': 'bodyweight',
         'base_coefficient': '0.85',
-        'image_url': 'https://example.com/plank.jpg',
+        'video_url': 'https://www.youtube.com/watch?v=pSHjTRCQxIw',
         'muscles': [('abs', '100.00', True)],
     },
     {
         'name': 'Yoga Flow',
-        'description': 'Mobility and breathing sequence.',
+        'description': 'Beginner-friendly mobility and breathing flow.',
         'exercise_type': 'yoga',
         'base_coefficient': '0.90',
-        'image_url': 'https://example.com/yoga.jpg',
+        'video_url': 'https://www.youtube.com/watch?v=MVPXbBe1E3E',
         'muscles': [('yoga', '100.00', True)],
     },
 ]
+
+
+def youtube_thumbnail(video_url: str) -> str:
+    parsed = urlparse(video_url)
+    host = parsed.netloc.lower()
+    video_id = ''
+
+    if 'youtu.be' in host:
+        video_id = parsed.path.strip('/')
+    elif 'youtube.com' in host:
+        video_id = parse_qs(parsed.query).get('v', [''])[0]
+        if not video_id and '/embed/' in parsed.path:
+            video_id = parsed.path.rsplit('/embed/', 1)[-1].split('/', 1)[0]
+
+    if not video_id:
+        return ''
+
+    return f'https://img.youtube.com/vi/{video_id}/hqdefault.jpg'
 
 
 class Command(BaseCommand):
@@ -77,7 +153,8 @@ class Command(BaseCommand):
                     'description': payload['description'],
                     'exercise_type': payload['exercise_type'],
                     'base_coefficient': payload['base_coefficient'],
-                    'image_url': payload['image_url'],
+                    'image_url': youtube_thumbnail(payload['video_url']),
+                    'video_url': payload['video_url'],
                     'is_active': True,
                 },
             )

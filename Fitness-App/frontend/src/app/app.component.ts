@@ -20,18 +20,10 @@ import { AuthService } from './services/auth.service';
     <ng-template #appShell>
       <div class="app-shell" *ngIf="authService.isLoggedIn()">
         <aside class="sidebar">
-          <div class="brand">
-            <div class="brand-mark">FT</div>
-            <div>
-              <strong>Fitness Tracker</strong>
-              <div class="muted">Training journal</div>
-            </div>
-          </div>
-
           <nav class="side-nav">
-            <a routerLink="/exercises" routerLinkActive="active">Exercises</a>
-            <a routerLink="/stats" routerLinkActive="active">Stats</a>
+            <a routerLink="/exercises" routerLinkActive="active">Exercise</a>
             <a routerLink="/session" routerLinkActive="active">Session</a>
+            <a routerLink="/stats" routerLinkActive="active">Statistics</a>
           </nav>
 
           <button class="btn ghost" type="button" (click)="logout()">Logout</button>

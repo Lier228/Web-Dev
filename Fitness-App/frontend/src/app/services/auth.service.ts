@@ -9,24 +9,33 @@ const USER_KEY = 'fitness.user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly authState = new BehaviorSubject<boolean>(this.hasAccessToken());
+  private readonly authState = new BehaviorSubject<boolean>(this.hasValidAccessToken());
   readonly authState$ = this.authState.asObservable();
+
+  constructor() {
+    if (!this.hasValidAccessToken()) {
+      this.clearStorage();
+    }
+  }
 
   storeSession(payload: LoginResponse): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, payload.access);
     localStorage.setItem(REFRESH_TOKEN_KEY, payload.refresh);
     localStorage.setItem(USER_KEY, JSON.stringify(payload.user));
-    this.authState.next(true);
+    this.authState.next(this.hasValidAccessToken());
   }
 
   clearSession(): void {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
+    this.clearStorage();
     this.authState.next(false);
   }
 
   getAccessToken(): string | null {
+    if (!this.hasValidAccessToken()) {
+      this.clearSession();
+      return null;
+    }
+
     return localStorage.getItem(ACCESS_TOKEN_KEY);
   }
 
@@ -52,10 +61,42 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.authState.value;
+    return this.hasValidAccessToken();
   }
 
-  private hasAccessToken(): boolean {
-    return Boolean(localStorage.getItem(ACCESS_TOKEN_KEY));
+  private hasValidAccessToken(): boolean {
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    if (!token) {
+      return false;
+    }
+
+    const payload = this.parseJwtPayload(token);
+    if (!payload || typeof payload.exp !== 'number') {
+      return false;
+    }
+
+    return payload.exp * 1000 > Date.now();
+  }
+
+  private parseJwtPayload(token: string): { exp?: number } | null {
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      return null;
+    }
+
+    try {
+      const normalized = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+      const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=');
+      const decoded = atob(padded);
+      return JSON.parse(decoded) as { exp?: number };
+    } catch {
+      return null;
+    }
+  }
+
+  private clearStorage(): void {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
   }
 }

@@ -32,6 +32,7 @@ class ExerciseModelSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'image_url',
+            'video_url',
             'exercise_type',
             'base_coefficient',
             'is_active',

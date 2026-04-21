@@ -22,6 +22,7 @@ class Exercise(models.Model):
     name = models.CharField(max_length=150, unique=True)
     description = models.TextField(blank=True)
     image_url = models.URLField(blank=True)
+    video_url = models.URLField(blank=True)
     exercise_type = models.CharField(max_length=20, choices=EXERCISE_TYPE_CHOICES, default='compound')
     base_coefficient = models.DecimalField(max_digits=5, decimal_places=2, default=1.0)
     is_active = models.BooleanField(default=True)

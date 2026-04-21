@@ -28,6 +28,7 @@ export interface Exercise {
   name: string;
   description: string;
   image_url: string;
+  video_url: string;
   exercise_type: string;
   base_coefficient: string;
   is_active: boolean;

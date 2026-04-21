@@ -122,10 +122,11 @@ export class ExerciseLogModalComponent implements OnChanges {
 
   activeImage(): string {
     const current = this.activeExercise();
-    if (!current || !current.image_url || this.usePlaceholder) {
+    if (!current || this.usePlaceholder) {
       return this.svgPlaceholder(current?.name ?? 'Exercise');
     }
-    return current.image_url;
+
+    return current.image_url || this.youtubeThumbnail(current.video_url) || this.svgPlaceholder(current.name);
   }
 
   submitForm(): void {
@@ -155,10 +156,47 @@ export class ExerciseLogModalComponent implements OnChanges {
     return `data:image/svg+xml;utf8,` +
       `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 340'>` +
       `<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>` +
-      `<stop offset='0%' stop-color='%23d8f3ea'/><stop offset='100%' stop-color='%23e8eff7'/></linearGradient></defs>` +
+      `<stop offset='0%' stop-color='%23c41721'/><stop offset='100%' stop-color='%23202024'/></linearGradient></defs>` +
       `<rect width='600' height='340' fill='url(%23g)'/>` +
-      `<text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%231f4c41' font-size='34' font-family='Segoe UI, sans-serif'>${safe}</text>` +
+      `<path d='M0 278 L600 190 L600 340 L0 340 Z' fill='%23ffffff20'/>` +
+      `<text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23f5f5f5' font-size='34' font-family='Segoe UI, sans-serif'>${safe}</text>` +
       `</svg>`;
+  }
+
+  private youtubeThumbnail(videoUrl: string): string {
+    const videoId = this.youtubeId(videoUrl);
+    return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+  }
+
+  private youtubeId(videoUrl: string): string | null {
+    if (!videoUrl) {
+      return null;
+    }
+
+    try {
+      const parsed = new URL(videoUrl);
+      const host = parsed.hostname.toLowerCase();
+      if (host.includes('youtu.be')) {
+        return parsed.pathname.slice(1) || null;
+      }
+
+      if (host.includes('youtube.com')) {
+        const direct = parsed.searchParams.get('v');
+        if (direct) {
+          return direct;
+        }
+
+        const segments = parsed.pathname.split('/').filter(Boolean);
+        const embedIndex = segments.indexOf('embed');
+        if (embedIndex >= 0) {
+          return segments[embedIndex + 1] ?? null;
+        }
+      }
+    } catch {
+      return null;
+    }
+
+    return null;
   }
 
   private escapeSvgText(value: string): string {
