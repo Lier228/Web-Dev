@@ -1,0 +1,258 @@
+[
+{
+  "model": "api.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$RXFh0KNWZZeaNiPPUQD0qw$crySTpITLoM4TBhJS92jMpJF+r5uF5Z523fkM9TUUcY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "SomeK",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-21T16:38:11.716Z",
+    "bio": "",
+    "avatar": "avatars/3F3F3F3F3F_3F3F.webp",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 1,
+  "fields": {
+    "name": "Bench Press",
+    "target_muscle": "chest",
+    "description": "Classic chest press with a barbell.",
+    "image_url": "https://img.youtube.com/vi/gRVjAtPip0Y/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=gRVjAtPip0Y",
+    "exercise_type": "compound",
+    "base_coefficient": "1.00",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 2,
+  "fields": {
+    "name": "Incline Dumbbell Press",
+    "target_muscle": "chest",
+    "description": "Upper chest pressing variation with dumbbells.",
+    "image_url": "https://img.youtube.com/vi/2iBZFwA9b6w/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=2iBZFwA9b6w",
+    "exercise_type": "compound",
+    "base_coefficient": "1.02",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 3,
+  "fields": {
+    "name": "Parallel Bar Dips",
+    "target_muscle": "triceps",
+    "description": "Bodyweight dip for chest and triceps.",
+    "image_url": "https://img.youtube.com/vi/cJyRpNh2FjU/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=cJyRpNh2FjU",
+    "exercise_type": "bodyweight",
+    "base_coefficient": "0.98",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 4,
+  "fields": {
+    "name": "Barbell Row",
+    "target_muscle": "back",
+    "description": "Upper back row with strong lat engagement.",
+    "image_url": "https://img.youtube.com/vi/DgyslsszCQ0/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=DgyslsszCQ0",
+    "exercise_type": "compound",
+    "base_coefficient": "1.00",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 5,
+  "fields": {
+    "name": "Lat Pulldown",
+    "target_muscle": "back",
+    "description": "Vertical pull for lats and upper back.",
+    "image_url": "https://img.youtube.com/vi/CAwf7n6Luuc/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=CAwf7n6Luuc",
+    "exercise_type": "machine",
+    "base_coefficient": "0.94",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 6,
+  "fields": {
+    "name": "Back Squat",
+    "target_muscle": "quads",
+    "description": "Lower body compound squat pattern.",
+    "image_url": "https://img.youtube.com/vi/ultWZbUMPL8/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=ultWZbUMPL8",
+    "exercise_type": "compound",
+    "base_coefficient": "1.10",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 7,
+  "fields": {
+    "name": "Bulgarian Split Squat",
+    "target_muscle": "glutes",
+    "description": "Single leg squat for quads and glutes.",
+    "image_url": "https://img.youtube.com/vi/2C-uNgKwPLE/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=2C-uNgKwPLE",
+    "exercise_type": "compound",
+    "base_coefficient": "1.04",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 8,
+  "fields": {
+    "name": "Barbell Curl",
+    "target_muscle": "biceps",
+    "description": "Standing curl for biceps strength.",
+    "image_url": "https://img.youtube.com/vi/kwG2ipFRgfo/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=kwG2ipFRgfo",
+    "exercise_type": "isolation",
+    "base_coefficient": "0.86",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 9,
+  "fields": {
+    "name": "Hammer Curl",
+    "target_muscle": "biceps",
+    "description": "Neutral grip curl for biceps and brachialis.",
+    "image_url": "https://img.youtube.com/vi/zC3nLlEvin4/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=zC3nLlEvin4",
+    "exercise_type": "isolation",
+    "base_coefficient": "0.88",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 10,
+  "fields": {
+    "name": "Skull Crusher",
+    "target_muscle": "triceps",
+    "description": "Lying triceps extension on a bench.",
+    "image_url": "https://img.youtube.com/vi/d_KZxkY_0cM/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=d_KZxkY_0cM",
+    "exercise_type": "isolation",
+    "base_coefficient": "0.90",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 11,
+  "fields": {
+    "name": "Plank",
+    "target_muscle": "abs",
+    "description": "Static core stability exercise.",
+    "image_url": "https://img.youtube.com/vi/pSHjTRCQxIw/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=pSHjTRCQxIw",
+    "exercise_type": "bodyweight",
+    "base_coefficient": "0.85",
+    "is_active": true
+  }
+},
+{
+  "model": "api.exercise",
+  "pk": 12,
+  "fields": {
+    "name": "Yoga Flow",
+    "target_muscle": "yoga",
+    "description": "Beginner friendly mobility and breathing flow.",
+    "image_url": "https://img.youtube.com/vi/v7AYKMP6rOE/hqdefault.jpg",
+    "video_url": "https://www.youtube.com/watch?v=v7AYKMP6rOE",
+    "exercise_type": "yoga",
+    "base_coefficient": "0.90",
+    "is_active": true
+  }
+},
+{
+  "model": "api.session",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "date": "2026-04-21",
+    "start_time": "2026-04-21T16:38:51.772Z",
+    "finish_time": "2026-04-21T16:39:17.142Z",
+    "duration": "00:00:25.369983",
+    "points_sum": 540
+  }
+},
+{
+  "model": "api.exerciseset",
+  "pk": 1,
+  "fields": {
+    "session": 1,
+    "exercise": 1,
+    "batch_id": "b9e0041f-a9f0-477a-9f65-30dc7b9c8dd2",
+    "set_number": 1,
+    "reps": 15,
+    "weight_kg": "12.00",
+    "points": 180,
+    "notes": "",
+    "created_at": "2026-04-21T16:39:02.878Z"
+  }
+},
+{
+  "model": "api.exerciseset",
+  "pk": 2,
+  "fields": {
+    "session": 1,
+    "exercise": 1,
+    "batch_id": "b9e0041f-a9f0-477a-9f65-30dc7b9c8dd2",
+    "set_number": 2,
+    "reps": 15,
+    "weight_kg": "12.00",
+    "points": 180,
+    "notes": "",
+    "created_at": "2026-04-21T16:39:02.890Z"
+  }
+},
+{
+  "model": "api.exerciseset",
+  "pk": 3,
+  "fields": {
+    "session": 1,
+    "exercise": 1,
+    "batch_id": "b9e0041f-a9f0-477a-9f65-30dc7b9c8dd2",
+    "set_number": 3,
+    "reps": 15,
+    "weight_kg": "12.00",
+    "points": 180,
+    "notes": "",
+    "created_at": "2026-04-21T16:39:02.901Z"
+  }
+},
+{
+  "model": "api.lastset",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "exercise": 1,
+    "reps": 15,
+    "weight_kg": "12.00",
+    "updated_at": "2026-04-21T16:39:02.912Z"
+  }
+}
+]
