@@ -15,13 +15,14 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = [
-            "id",
-            "name",
-            "price",
-            "description",
-            "count",
-            "is_active",
-            "category",
-            "category_id",
-        ]
+        fields = ["id", "name", "price", "description", "count", "is_active", "category", "category_id"]
+
+    def create(self, validated_data):
+        cat_id = validated_data.pop('category_id')
+        
+        try:
+            category = Category.objects.get(id=cat_id)
+        except Category.DoesNotExist:
+            raise serializers.ValidationError({"category_id": "Категории с таким ID не существует!"})
+
+        return Product.objects.create(category=category, **validated_data)
