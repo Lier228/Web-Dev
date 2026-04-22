@@ -1,6 +1,8 @@
 export interface User {
   id: number;
   username: string;
+  bio?: string;
+  avatar?: string | null;
 }
 
 export interface LoginResponse {
@@ -26,6 +28,7 @@ export interface ExerciseMuscle {
 export interface Exercise {
   id: number;
   name: string;
+  target_muscle: string;
   description: string;
   image_url: string;
   video_url: string;

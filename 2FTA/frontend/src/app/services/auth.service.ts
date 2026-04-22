@@ -21,7 +21,7 @@ export class AuthService {
   storeSession(payload: LoginResponse): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, payload.access);
     localStorage.setItem(REFRESH_TOKEN_KEY, payload.refresh);
-    localStorage.setItem(USER_KEY, JSON.stringify(payload.user));
+    this.setUser(payload.user);
     this.authState.next(this.hasValidAccessToken());
   }
 
@@ -58,6 +58,14 @@ export class AuthService {
 
   getUsername(): string {
     return this.getUser()?.username ?? 'Athlete';
+  }
+
+  getAvatar(): string | null {
+    return this.getUser()?.avatar ?? null;
+  }
+
+  setUser(user: User): void {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
   isLoggedIn(): boolean {
