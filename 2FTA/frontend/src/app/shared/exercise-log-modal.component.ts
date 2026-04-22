@@ -50,7 +50,7 @@ export interface ExerciseLogPayload {
             </div>
             <div class="toolbar">
               <span class="badge" *ngFor="let group of item.exercise_muscles">
-                {{ group.muscle_group.name }}
+                {{ group.muscle_group.name }} {{ group.contribution_percent }}%
               </span>
             </div>
           </div>

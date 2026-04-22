@@ -3,16 +3,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 
-import { SessionExercise, WeeklyStats } from '../core/models/api.models';
+import { SessionExercise, WeeklyStats, Exercise } from '../core/models/api.models';
 import { ApiService } from '../services/api.service';
 
 interface DayMetric {
   label: string;
   dateKey: string;
   points: number;
-  volume: number;
-  averageWeight: number;
-  setsReps: number;
 }
 
 @Component({
@@ -23,249 +20,235 @@ interface DayMetric {
     <section class="page-stack">
       <div class="page-head">
         <div>
-          <h1 class="page-title">Stats</h1>
-          <p class="muted">Your weekly activity and muscle balance.</p>
+          <h1 class="page-title">Analytics</h1>
+          <p class="muted">Global activity and exercise progression.</p>
         </div>
-        <label class="field">
-          <span class="muted">Period</span>
-          <select [(ngModel)]="period" (ngModelChange)="reload()">
-            <option value="week">1 week</option>
-          </select>
-        </label>
       </div>
 
-      <div class="flash error" *ngIf="error">{{ error }}</div>
+      <div class="stats-grid-summary" *ngIf="stats">
+        <article class="stat-mini-card">
+          <span class="stat-label">TOTAL POINTS</span>
+          <span class="stat-value">{{ stats.total_points }}</span>
+        </article>
+        <article class="stat-mini-card">
+          <span class="stat-label">TOTAL SESSIONS</span>
+          <span class="stat-value">{{ stats.total_sessions }}</span>
+        </article>
+      </div>
 
       <div class="chart-grid" *ngIf="stats">
         <article class="card">
-          <div class="page-head">
-            <div>
-              <h2>Activity points (last 7 days)</h2>
-              <div class="muted">Rolling backend week, grouped by date.</div>
-            </div>
-            <span class="badge">{{ stats.total_points | number: '1.0-0' }} pts</span>
-          </div>
-
+          <h2>Activity Intensity</h2>
           <div class="chart-shell">
-            <svg viewBox="0 0 720 240" preserveAspectRatio="none" aria-label="Weekly points">
-              <line x1="40" y1="200" x2="700" y2="200" stroke="#cad6e4" stroke-width="2"></line>
-              <line x1="40" y1="30" x2="40" y2="200" stroke="#cad6e4" stroke-width="2"></line>
-              <polyline
-                [attr.points]="linePoints()"
-                fill="none"
-                stroke="#1f8a70"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></polyline>
-              <circle
-                *ngFor="let day of dayMetrics; let i = index"
-                [attr.cx]="xCoord(i)"
-                [attr.cy]="yCoord(day.points, maxPoints())"
-                r="4.5"
-                fill="#176a56"
-              ></circle>
-              <text *ngFor="let day of dayMetrics; let i = index" [attr.x]="xCoord(i)" y="224" font-size="11" text-anchor="middle" fill="#6f7f90">
-                {{ day.label }}
-              </text>
+            <svg viewBox="0 0 720 240">
+              <polyline [attr.points]="linePoints()" fill="none" stroke="#d81c25" stroke-width="4" />
+              <circle *ngFor="let day of dayMetrics; let i = index" 
+                [attr.cx]="xCoord(i)" 
+                [attr.cy]="yCoord(day.points, maxPoints())" 
+                r="6" fill="#fff" />
             </svg>
           </div>
         </article>
 
         <article class="card">
-          <div class="page-head">
-            <div>
-              <h2>Muscle Distribution</h2>
-              <div class="muted">Share by accumulated backend points</div>
-            </div>
-            <span class="badge">{{ stats.total_sessions }} sessions</span>
-          </div>
-
-          <div class="toolbar" style="align-items: flex-start;">
-            <div
-              [style.background]="pieGradient()"
-              style="width: 180px; aspect-ratio: 1 / 1; border-radius: 50%; border: 10px solid #f4f7fa; flex-shrink: 0;"
-            ></div>
-
-            <div class="legend" style="flex: 1;">
+          <h2>Muscle Focus</h2>
+          <div class="pie-container">
+            <div [style.background]="pieGradient()" class="pie-chart"></div>
+            <div class="legend">
               <div class="legend-item" *ngFor="let item of topMuscles(); let i = index">
                 <span class="legend-dot" [style.background]="palette(i)"></span>
-                <span>{{ item.muscle }}</span>
-                <strong>{{ item.points | number: '1.0-0' }}</strong>
+                <span class="muted">{{ item.muscle }}:</span>
+                <strong>{{ item.points }}</strong>
               </div>
             </div>
           </div>
         </article>
       </div>
 
-      <div class="mini-chart-grid" *ngIf="stats">
-        <article class="card">
-          <h3>Total lifted volume</h3>
-          <div class="muted">Weight x reps x sets per day</div>
-          <div class="bar-row">
-            <div
-              class="bar"
-              *ngFor="let day of dayMetrics"
-              [style.height.%]="height(day.volume, maxVolume())"
-              [title]="day.label + ': ' + (day.volume | number: '1.0-0') + ' kg'"
-            ></div>
-          </div>
-        </article>
+      <article class="card selector-panel">
+        <div class="panel-header">
+          <h2>Exercise Explorer</h2>
+          <p class="muted">Choose a muscle group and specific exercise</p>
+        </div>
+        
+        <div class="filter-row">
+          <button 
+            *ngFor="let group of muscleGroups" 
+            (click)="selectGroup(group)"
+            [class.active]="selectedGroup === group"
+            class="chip">
+            {{ group }}
+          </button>
+        </div>
 
-        <article class="card">
-          <h3>Average weight</h3>
-          <div class="muted">Average logged weight by day</div>
-          <div class="bar-row">
-            <div
-              class="bar"
-              *ngFor="let day of dayMetrics"
-              [style.height.%]="height(day.averageWeight, maxAverageWeight())"
-              [title]="day.label + ': ' + (day.averageWeight | number: '1.0-1') + ' kg'"
-            ></div>
-          </div>
-        </article>
+        <div class="exercise-list" *ngIf="filteredExercises.length; else noEx">
+          <button 
+            *ngFor="let ex of filteredExercises" 
+            (click)="selectExercise(ex)"
+            [class.selected]="selectedExercise?.id === ex.id"
+            class="ex-btn">
+            {{ ex.name }}
+          </button>
+        </div>
+        <ng-template #noEx><p class="muted">No exercises found for this group.</p></ng-template>
+      </article>
 
-        <article class="card">
-          <h3>Sets x reps load</h3>
-          <div class="muted">Total set-rep workload per day</div>
-          <div class="bar-row">
-            <div
-              class="bar"
-              *ngFor="let day of dayMetrics"
-              [style.height.%]="height(day.setsReps, maxSetsReps())"
-              [title]="day.label + ': ' + day.setsReps"
-            ></div>
-          </div>
-        </article>
-      </div>
+      <article class="card" *ngIf="selectedExercise">
+        <div class="chart-header">
+          <h2 class="accent-text">{{ selectedExercise.name }}</h2>
+          <span class="muted">Max Weight (kg) per day</span>
+        </div>
+        
+        <div class="chart-shell progression-chart">
+           <svg viewBox="0 0 720 200">
+              <rect *ngFor="let day of dayMetrics; let i = index"
+                [attr.x]="xCoord(i) - 15"
+                [attr.y]="yCoord(getExerciseMaxWeight(day.dateKey), maxExWeight())"
+                width="30"
+                [attr.height]="200 - yCoord(getExerciseMaxWeight(day.dateKey), maxExWeight())"
+                fill="url(#barGrad)"
+                rx="4"
+              />
+              <defs>
+                <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#d81c25" />
+                  <stop offset="100%" stop-color="#440000" />
+                </linearGradient>
+              </defs>
+              <text *ngFor="let day of dayMetrics; let i = index" [attr.x]="xCoord(i)" y="225" font-size="12" text-anchor="middle" fill="#6f7f90">
+                {{ day.label }}
+              </text>
+           </svg>
+        </div>
+      </article>
     </section>
   `,
+  styles: [`
+    .page-stack { display: flex; flex-direction: column; gap: 24px; padding: 20px; color: #fff; }
+    .stats-grid-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .stat-mini-card { background: #111; padding: 20px; border-radius: 12px; border-left: 4px solid #d81c25; }
+    .stat-label { display: block; font-size: 0.8rem; color: #555; font-family: 'Orbitron'; }
+    .stat-value { font-size: 1.8rem; font-weight: bold; font-family: 'Orbitron'; }
+    p{font-family: 'Saira',sans-serif;}
+    
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; border-radius: 16px; }
+    .pie-container { display: flex; align-items: center; gap: 30px; }
+    .pie-chart { width: 140px; height: 140px; border-radius: 50%; flex-shrink: 0; }
+    .legend { display: flex; flex-direction: column; gap: 8px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 8px; }
+
+    .filter-row { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; }
+    .chip { background: #1a1a1a; border: 1px solid #333; color: #888; padding: 8px 18px; border-radius: 20px; cursor: pointer; }
+    .chip.active { background: #d81c25; color: #fff; border-color: #d81c25; box-shadow: 0 0 15px rgba(216,28,37,0.3); }
+
+    .exercise-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .ex-btn { background: #111; border: 1px solid #222; color: #ccc; padding: 10px 16px; border-radius: 8px; cursor: pointer; }
+    .ex-btn:hover, .ex-btn.selected { border-color: #d81c25; color: #fff; background: #1a0506; }
+    
+    .progression-chart { height: 260px; margin-top: 20px; }
+    .accent-text { color: #d81c25; text-transform: uppercase; letter-spacing: 1px; }
+    .chart-shell { width: 100%; height: 200px; }
+  `]
 })
 export class StatsPageComponent implements OnInit {
   private readonly api = inject(ApiService);
 
   stats: WeeklyStats | null = null;
   dayMetrics: DayMetric[] = [];
-  period = 'week';
-  error = '';
+  allExercises: Exercise[] = [];
+  filteredExercises: Exercise[] = [];
+  allEntries: SessionExercise[] = [];
+  
+  muscleGroups: string[] = ['Chest', 'Back', 'Biceps', 'Triceps', 'Shoulders', 'Legs'];
+  selectedGroup: string = 'Chest';
+  selectedExercise: Exercise | null = null;
 
   ngOnInit(): void {
     this.reload();
   }
 
   reload(): void {
-    this.error = '';
     forkJoin({
       stats: this.api.getWeeklyStats(),
       entries: this.api.getSessionExercises(),
+      exercises: this.api.getExercises()
     }).subscribe({
-      next: ({ stats, entries }) => {
+      next: ({ stats, entries, exercises }) => {
         this.stats = stats;
-        this.dayMetrics = this.buildDayMetrics(stats, entries);
+        this.allEntries = entries;
+        this.allExercises = exercises;
+        this.dayMetrics = this.buildDayMetrics(stats);
+        this.selectGroup(this.selectedGroup);
       },
-      error: () => {
-        this.error = 'Could not load statistics.';
-      },
+      error: (err) => console.error('Error loading stats:', err)
     });
   }
 
-  xCoord(index: number): number {
-    return 50 + index * 108;
-  }
-
-  yCoord(value: number, max: number): number {
-    const usableHeight = 160;
-    const normalized = max === 0 ? 0 : value / max;
-    return 200 - normalized * usableHeight;
-  }
-
-  linePoints(): string {
-    return this.dayMetrics.map((day, index) => `${this.xCoord(index)},${this.yCoord(day.points, this.maxPoints())}`).join(' ');
-  }
-
-  palette(index: number): string {
-    const colors = ['#1f8a70', '#4cb394', '#ffb65c', '#eb6d66', '#7a9df4', '#9b7ae4', '#58c1dd', '#8fba67'];
-    return colors[index % colors.length];
-  }
-
-  pieGradient(): string {
-    const slices = this.topMuscles();
-    if (slices.length === 0) {
-      return 'conic-gradient(#d9e4ee 0deg 360deg)';
+  selectGroup(group: string) {
+    this.selectedGroup = group;
+    this.filteredExercises = this.allExercises.filter(ex => {
+      const gName = (ex as any).muscle_group_name || (ex as any).muscle_group;
+      return gName === group;
+    });
+    
+    if (this.filteredExercises.length > 0) {
+      this.selectExercise(this.filteredExercises[0]);
+    } else {
+      this.selectedExercise = null;
     }
-    const total = slices.reduce((sum, item) => sum + item.points, 0) || 1;
+  }
+
+  selectExercise(ex: Exercise) {
+    this.selectedExercise = ex;
+  }
+
+  getExerciseMaxWeight(date: string): number {
+    if (!this.selectedExercise) return 0;
+    const dayEntries = this.allEntries.filter(e => 
+      e.created_at.startsWith(date) && e.exercise === this.selectedExercise?.id
+    );
+    return Math.max(...dayEntries.map(e => Number(e.weight_kg) || 0), 0);
+  }
+
+  maxExWeight(): number {
+    const weights = this.dayMetrics.map(d => this.getExerciseMaxWeight(d.dateKey));
+    return Math.max(...weights, 1);
+  }
+
+  xCoord = (i: number) => 50 + i * 100;
+  yCoord = (v: number, max: number) => 200 - (max === 0 ? 0 : (v / max) * 160);
+  maxPoints = () => Math.max(...this.dayMetrics.map(d => d.points), 1);
+  
+  linePoints() {
+    return this.dayMetrics.map((d, i) => `${this.xCoord(i)},${this.yCoord(d.points, this.maxPoints())}`).join(' ');
+  }
+
+  palette = (i: number) => ['#d81c25', '#ffb65c', '#7a9df4', '#1f8a70', '#9b7ae4'][i % 5];
+
+  pieGradient() {
+    const slices = this.topMuscles();
+    if (!slices.length) return 'conic-gradient(#222 0deg 360deg)';
     let cursor = 0;
-    const stops = slices.map((slice, index) => {
+    const total = slices.reduce((sum, s) => sum + s.points, 0) || 1;
+    const stops = slices.map((s, i) => {
       const start = (cursor / total) * 360;
-      cursor += slice.points;
-      const end = (cursor / total) * 360;
-      const color = this.palette(index);
-      return `${color} ${start}deg ${end}deg`;
+      cursor += s.points;
+      return `${this.palette(i)} ${start}deg ${(cursor / total) * 360}deg`;
     });
     return `conic-gradient(${stops.join(', ')})`;
   }
 
-  topMuscles(): Array<{ muscle: string; points: number }> {
+  topMuscles() {
     return [...(this.stats?.muscle_distribution ?? [])]
-      .sort((left, right) => right.points - left.points)
-      .filter((item) => item.points > 0)
-      .slice(0, 7);
+      .sort((a, b) => b.points - a.points).slice(0, 5);
   }
 
-  maxPoints(): number {
-    return Math.max(...this.dayMetrics.map((day) => day.points), 0);
-  }
-
-  maxVolume(): number {
-    return Math.max(...this.dayMetrics.map((day) => day.volume), 0);
-  }
-
-  maxAverageWeight(): number {
-    return Math.max(...this.dayMetrics.map((day) => day.averageWeight), 0);
-  }
-
-  maxSetsReps(): number {
-    return Math.max(...this.dayMetrics.map((day) => day.setsReps), 0);
-  }
-
-  height(value: number, max: number): number {
-    if (max === 0) {
-      return 6;
-    }
-    return Math.max(6, (value / max) * 100);
-  }
-
-  private buildDayMetrics(stats: WeeklyStats, entries: SessionExercise[]): DayMetric[] {
-    const bucket = new Map<string, { volume: number; weightSum: number; weightCount: number; setsReps: number }>();
-
-    for (const item of entries) {
-      const key = item.created_at.slice(0, 10);
-      const weight = Number(item.weight_kg);
-      const reps = Number(item.reps);
-      const sets = Number(item.sets);
-      const current = bucket.get(key) ?? { volume: 0, weightSum: 0, weightCount: 0, setsReps: 0 };
-      current.volume += weight * reps * sets;
-      current.weightSum += weight;
-      current.weightCount += 1;
-      current.setsReps += sets * reps;
-      bucket.set(key, current);
-    }
-
-    return stats.line_chart.map((point) => {
-      const values = bucket.get(point.date) ?? { volume: 0, weightSum: 0, weightCount: 0, setsReps: 0 };
-      return {
-        label: this.weekday(point.date),
-        dateKey: point.date,
-        points: point.points,
-        volume: values.volume,
-        averageWeight: values.weightCount ? values.weightSum / values.weightCount : 0,
-        setsReps: values.setsReps,
-      };
-    });
-  }
-
-  private weekday(isoDate: string): string {
-    const date = new Date(isoDate);
-    return date.toLocaleDateString(undefined, { weekday: 'short' });
+  private buildDayMetrics(stats: WeeklyStats): DayMetric[] {
+    return stats.line_chart.map(point => ({
+      label: new Date(point.date).toLocaleDateString('en-US', { weekday: 'short' }),
+      dateKey: point.date,
+      points: point.points
+    }));
   }
 }

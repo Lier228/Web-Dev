@@ -11,7 +11,7 @@ interface CategoryItem {
   label: string;
 }
 
-const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forearm', 'quads', 'glutes', 'hamstrings', 'calves', 'abs', 'yoga'];
+const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'quads', 'glutes', 'abs', 'yoga'];
 
 @Component({
   selector: 'app-exercises-page',
@@ -22,7 +22,7 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forear
       <div class="page-head exercise-head">
         <div>
           <h1 class="reference-title">EXERCISE</h1>
-          <p class="reference-subtitle">Technique clips and YouTube walkthroughs grouped by the backend exercise categories.</p>
+          <p class="reference-subtitle">Technique clips and YouTube walkthroughs grouped by muscle category.</p>
         </div>
         <span class="reference-counter">{{ exercises.length }} VIDEOS</span>
       </div>
@@ -75,7 +75,7 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forear
 
           <div class="video-muscles">
             <span class="video-tag" *ngFor="let group of exercise.exercise_muscles">
-              {{ group.muscle_group.name }}
+              {{ group.muscle_group.name }} {{ group.contribution_percent }}%
             </span>
           </div>
 
@@ -103,8 +103,8 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forear
           </div>
 
           <div class="video-copy">
-            <strong>{{ exercise.name }}</strong>
-            <span>{{ exercise.description || exercise.exercise_type }}</span>
+          <strong class="exercise-title">{{ exercise.name }}</strong>
+          <span class="exercise-sub">{{ exercise.description || exercise.exercise_type }}</span>
           </div>
 
           <span class="video-type">{{ exercise.exercise_type }}</span>
@@ -130,6 +130,9 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forear
       .video-type {
         font-family: 'Orbitron', 'Arial Narrow', Arial, sans-serif;
       }
+      p{
+      font-family: 'Saira',sans-serif;
+      }
 
       .reference-title {
         font-size: clamp(2rem, 4vw, 3rem);
@@ -138,6 +141,7 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forear
       }
 
       .reference-subtitle {
+        font-family: 'Saira';
         margin-top: 8px;
         max-width: 700px;
         color: rgba(255, 255, 255, 0.68);
@@ -145,7 +149,8 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forear
       }
 
       .reference-counter {
-        display: inline-flex;
+        display: flex;
+        flex-direction: column;
         align-items: center;
         min-height: 48px;
         padding: 0 18px;
@@ -271,7 +276,8 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forear
       }
 
       .video-link {
-        display: inline-flex;
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         min-height: 54px;
@@ -322,19 +328,37 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'forear
         display: block;
       }
 
-      .video-copy {
-        display: grid;
-        gap: 8px;
+      display: flex !important;
+        flex-direction: column !important; 
+        align-items: flex-start !important;
+        justify-content: center;
+        gap: 4px;
+        padding-left: 10px;
+        overflow: hidden; 
       }
 
-      .video-copy strong {
-        font-size: 1.05rem;
-        line-height: 1.35;
+      .exercise-title {
+        display: block !important;
+        width: 100%;
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.2;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; 
       }
 
-      .video-copy span {
-        color: rgba(255, 255, 255, 0.68);
-        line-height: 1.5;
+      .exercise-sub {
+        display: block !important;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.85rem;
+        line-height: 1.3;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
 
       .video-type {
@@ -465,12 +489,7 @@ export class ExercisesPageComponent implements OnInit {
   }
 
   primaryMuscle(exercise: Exercise): string {
-    const primary = exercise.exercise_muscles.find((group) => group.is_primary)?.muscle_group.name;
-    if (primary) {
-      return primary.toUpperCase();
-    }
-
-    return exercise.target_muscle ? exercise.target_muscle.replaceAll('_', ' ').toUpperCase() : 'GUIDE';
+    return exercise.exercise_muscles.find((group) => group.is_primary)?.muscle_group.name.toUpperCase() ?? 'GUIDE';
   }
 
   private fetchExercises(): void {

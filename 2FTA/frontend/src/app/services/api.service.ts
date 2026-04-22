@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Exercise, LoginResponse, MuscleGroup, Session, SessionExercise, User, WeeklyStats } from '../core/models/api.models';
+import { Exercise, LoginResponse, MuscleGroup, Session, SessionExercise, WeeklyStats } from '../core/models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -19,14 +19,6 @@ export class ApiService {
 
   logout(refresh: string): Observable<{ detail: string }> {
     return this.http.post<{ detail: string }>(`${this.baseUrl}/auth/logout/`, { refresh });
-  }
-
-  getProfile(): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/profile/`);
-  }
-
-  updateProfile(data: FormData): Observable<User> {
-    return this.http.patch<User>(`${this.baseUrl}/profile/`, data);
   }
 
   getMuscles(): Observable<MuscleGroup[]> {
