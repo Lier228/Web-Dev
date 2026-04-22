@@ -28,7 +28,7 @@ body {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Michroma', sans-serif;;
   color: var(--text);
   background:
     radial-gradient(circle at 18% 18%, rgba(212, 24, 35, 0.22) 0%, transparent 22%),
@@ -68,7 +68,7 @@ p {
   border-right: 1px solid var(--line);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.05) 12%),
-    linear-gradient(180deg, #d51924 0%, #ce1721 46%, #a41018 100%);
+    linear-gradient(180deg, #36d023 0%, #ce1721 46%, #a41018 100%);
   display: flex;
   flex-direction: column;
   gap: 18px;

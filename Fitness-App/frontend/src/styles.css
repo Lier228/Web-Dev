@@ -1,6 +1,8 @@
 :root {
   color-scheme: light;
-  --font-display: "Orbitron", "Arial Narrow", Arial, sans-serif;
+  --font-display: "Orbitron", sans-serif;
+  --font-main: "Lato", sans-serif;
+  --font-logo: "Michroma", sans-serif;
   --bg: #090909;
   --surface: #121212;
   --surface-soft: #1a1a1a;
@@ -28,7 +30,7 @@ body {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Orbitron, Lato, sans-serif;
   color: var(--text);
   background:
     radial-gradient(circle at 18% 18%, rgba(212, 24, 35, 0.22) 0%, transparent 22%),
@@ -126,10 +128,11 @@ p {
 }
 
 .side-nav a.active {
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 55%),
-    linear-gradient(180deg, #f12832, #a20e17);
+  background: linear-gradient(90deg, var(--accent-strong), var(--accent));
   color: #ffffff;
+  border-left: 4px solid #ffffff; 
+  box-shadow: 0 0 15px rgba(212, 24, 35, 0.4);
+  transform: translateX(4px);
 }
 
 .main-panel {
@@ -372,6 +375,7 @@ p {
   background: var(--surface-soft);
   padding: 12px;
 }
+
 
 .badge {
   display: inline-flex;

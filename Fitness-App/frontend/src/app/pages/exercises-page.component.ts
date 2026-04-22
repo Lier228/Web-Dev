@@ -103,8 +103,8 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'quads', 'glutes', '
           </div>
 
           <div class="video-copy">
-            <strong>{{ exercise.name }}</strong>
-            <span>{{ exercise.description || exercise.exercise_type }}</span>
+          <strong class="exercise-title">{{ exercise.name }}</strong>
+          <span class="exercise-sub">{{ exercise.description || exercise.exercise_type }}</span>
           </div>
 
           <span class="video-type">{{ exercise.exercise_type }}</span>
@@ -130,6 +130,9 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'quads', 'glutes', '
       .video-type {
         font-family: 'Orbitron', 'Arial Narrow', Arial, sans-serif;
       }
+      p{
+      font-family: 'Saira',sans-serif;
+      }
 
       .reference-title {
         font-size: clamp(2rem, 4vw, 3rem);
@@ -138,6 +141,7 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'quads', 'glutes', '
       }
 
       .reference-subtitle {
+        font-family: 'Saira';
         margin-top: 8px;
         max-width: 700px;
         color: rgba(255, 255, 255, 0.68);
@@ -145,7 +149,8 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'quads', 'glutes', '
       }
 
       .reference-counter {
-        display: inline-flex;
+        display: flex;
+        flex-direction: column;
         align-items: center;
         min-height: 48px;
         padding: 0 18px;
@@ -271,7 +276,8 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'quads', 'glutes', '
       }
 
       .video-link {
-        display: inline-flex;
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         min-height: 54px;
@@ -322,19 +328,37 @@ const MUSCLE_ORDER = ['chest', 'back', 'biceps', 'triceps', 'quads', 'glutes', '
         display: block;
       }
 
-      .video-copy {
-        display: grid;
-        gap: 8px;
+      display: flex !important;
+        flex-direction: column !important; 
+        align-items: flex-start !important;
+        justify-content: center;
+        gap: 4px;
+        padding-left: 10px;
+        overflow: hidden; 
       }
 
-      .video-copy strong {
-        font-size: 1.05rem;
-        line-height: 1.35;
+      .exercise-title {
+        display: block !important;
+        width: 100%;
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.2;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; 
       }
 
-      .video-copy span {
-        color: rgba(255, 255, 255, 0.68);
-        line-height: 1.5;
+      .exercise-sub {
+        display: block !important;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.85rem;
+        line-height: 1.3;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
 
       .video-type {

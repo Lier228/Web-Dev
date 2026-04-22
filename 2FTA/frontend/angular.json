@@ -20,10 +20,13 @@
               "zone.js"
             ],
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+                "src/2fta_logo.PNG",
+                "src/assets",
+                {
+                    "glob": "**/*",
+                    "input": "public",
+                    "output": "/"
+                }
             ],
             "styles": [
               "src/styles.css"

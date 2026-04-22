@@ -24,6 +24,7 @@ import { AuthService } from './services/auth.service';
             <a routerLink="/exercises" routerLinkActive="active">Exercise</a>
             <a routerLink="/session" routerLinkActive="active">Session</a>
             <a routerLink="/stats" routerLinkActive="active">Statistics</a>
+            <a routerLink="/diary" routerLinkActive="active">Diary</a>
           </nav>
 
           <button class="btn ghost" type="button" (click)="logout()">Logout</button>
